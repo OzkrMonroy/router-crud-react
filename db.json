@@ -1,0 +1,22 @@
+{
+  "restaurante": [
+    {
+      "precioPlatillo": "200",
+      "nombrePlatillo": "CheeseCake",
+      "categoria": "Postres",
+      "id": "1"
+    },
+    {
+      "precioPlatillo": "300",
+      "nombrePlatillo": "Rib Eye 400g",
+      "categoria": "Cortes",
+      "id": "2"
+    },
+    {
+      "nombrePlatillo": "Pastel de diez leches",
+      "precioPlatillo": "3000",
+      "categoria": "postre",
+      "id": "hEElY5o"
+    }
+  ]
+}
