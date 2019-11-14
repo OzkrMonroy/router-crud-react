@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import Error from './Error'
 import axios from 'axios'
+// importamos sweetalert
+import Swal from 'sweetalert2'
+// Para manejar la reedirección
+import { withRouter } from 'react-router-dom'
 
-function AgregarProducto() {
+// 3 Al usar withRouter podemos acceder al history
+function AgregarProducto({history, guardarCargarProductos}) {
+
   const [nombrePlatillo, guardarNombre] = useState('')
   const [precioPlatillo, guardarPrecio] = useState('')
   const [categoria, guardarCategoria] = useState('postre')
@@ -34,10 +40,26 @@ function AgregarProducto() {
       const request = await axios.post('http://localhost:4000/restaurante', platillo)
       
       console.log(request)
+      // Mostramos una alerta utilizando sweetAlert2 (lo instalamos mediante npm i --save sweetalert2)
+      if(request.status === 201) {
+        Swal.fire(
+          '¡Producto creado!',
+          'El producto se a creado',
+          'success'
+        )
+      }
     } catch (error) {
       console.log(error);
-      
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Hubo un error de nuestro lado, por favor vuelve a intentarlo.',
+      })
     }
+
+    // 4 Redireccionamos al usuario
+    guardarCargarProductos(true)
+    history.push('/productos')
   }
 
   return (
@@ -124,4 +146,5 @@ function AgregarProducto() {
   );
 }
 
-export default AgregarProducto;
+// 2 debemos envolver con withRouter para poder manejar el history
+export default withRouter(AgregarProducto);

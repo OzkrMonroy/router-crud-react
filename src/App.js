@@ -10,16 +10,20 @@ import Producto from './components/Producto'
 function App() {
 
     const [productos, guardarProductos] = useState([])
+    const [cargarProductos, guardarCargarProductos] = useState(true)
 
     useEffect(() => {
-      const consultarApi = async () => {
-        const consulta = await axios.get('http://localhost:4000/restaurante')
-
-        console.log(consulta.data)
-        guardarProductos(consulta.data)
+      if (cargarProductos) {
+        const consultarApi = async () => {
+          const consulta = await axios.get('http://localhost:4000/restaurante')
+  
+          console.log(consulta.data)
+          guardarProductos(consulta.data)
+          guardarCargarProductos(false)
+        }
+        consultarApi()
       }
-      consultarApi()
-    }, [])
+    }, [cargarProductos])
   // Siempre colocar las rutas más específicas primero luego los genéricos (/:id)
   return (
     <Router>
@@ -30,9 +34,20 @@ function App() {
             <Productos
               productos={productos} />
           )}/>
-          <Route exact path="/productos/nuevo-producto" component={AgregarProducto}/>
+          <Route exact path="/productos/nuevo-producto" render={() => (
+            <AgregarProducto
+              guardarCargarProductos={guardarCargarProductos} />
+          )}/>
           <Route exact path="/productos/:id" component={Producto}/>
-          <Route exact path="/productos/editar/:id" component={EditarProducto}/>
+          <Route exact path="/productos/editar/:id" render={props => {
+            const idProducto = parseInt(props.match.params.id)
+            const producto = productos.filter(producto => producto.id === idProducto)
+            return (
+              <EditarProducto
+                producto={producto[0]}
+              />
+            )
+          }}/>
         </Switch>
       </main>
       <p className="mt4 p2 text-center">Todos los derechos reservados</p>

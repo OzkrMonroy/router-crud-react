@@ -3,20 +3,26 @@
     {
       "precioPlatillo": "200",
       "nombrePlatillo": "CheeseCake",
-      "categoria": "Postres",
-      "id": "1"
+      "categoria": "postre",
+      "id": 1
     },
     {
       "precioPlatillo": "300",
       "nombrePlatillo": "Rib Eye 400g",
       "categoria": "Cortes",
-      "id": "2"
+      "id": 2
     },
     {
       "nombrePlatillo": "Pastel de diez leches",
-      "precioPlatillo": "3000",
+      "precioPlatillo": "500",
       "categoria": "postre",
-      "id": "hEElY5o"
+      "id": 3
+    },
+    {
+      "nombrePlatillo": "Cerveza de mantequilla",
+      "precioPlatillo": "75",
+      "categoria": "bebida",
+      "id": 4
     }
   ]
 }
