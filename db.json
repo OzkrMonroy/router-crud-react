@@ -1,8 +1,8 @@
 {
   "restaurante": [
     {
-      "precioPlatillo": "200",
-      "nombrePlatillo": "CheeseCake",
+      "nombrePlatillo": "Cheesecake",
+      "precioPlatillo": "150",
       "categoria": "postre",
       "id": 1
     },
@@ -17,12 +17,6 @@
       "precioPlatillo": "500",
       "categoria": "postre",
       "id": 3
-    },
-    {
-      "nombrePlatillo": "Cerveza de mantequilla",
-      "precioPlatillo": "75",
-      "categoria": "bebida",
-      "id": 4
     }
   ]
 }

@@ -32,7 +32,8 @@ function App() {
         <Switch>
           <Route exact path="/productos" render={() => (
             <Productos
-              productos={productos} />
+              productos={productos}
+              guardarCargarProductos={guardarCargarProductos} />
           )}/>
           <Route exact path="/productos/nuevo-producto" render={() => (
             <AgregarProducto
@@ -45,6 +46,7 @@ function App() {
             return (
               <EditarProducto
                 producto={producto[0]}
+                guardarCargarProductos={guardarCargarProductos}
               />
             )
           }}/>

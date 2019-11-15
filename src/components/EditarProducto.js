@@ -1,7 +1,12 @@
 import React, { useState, useRef } from 'react';
 import Error from './Error'
+import axios from 'axios'
+import Swal from 'sweetalert2'
+import { withRouter } from 'react-router-dom'
 
-function EditarProducto({producto}) {
+function EditarProducto(props) {
+  const {history ,producto, guardarCargarProductos} = props
+
   // creamos los Ref
   const precioPlatilloRef = useRef('')
   const nombrePlatilloRef = useRef('')
@@ -9,17 +14,53 @@ function EditarProducto({producto}) {
   const [error, guardarError] = useState(false)
   const [categoria, guardarCategoria] = useState('')
 
-  const editarProducto = e => {
+  const editarProducto = async e => {
     e.preventDefault()
 
+    const nuevoNombrePlatillo = nombrePlatilloRef.current.value,
+          nuevoPrecioPlatillo = precioPlatilloRef.current.value
     // Verificar si la categoria cambio
     let categoriaPlatillo = (categoria === '') ? producto.categoria : categoria
 
+    if(nuevoNombrePlatillo === '' || nuevoPrecioPlatillo === '') {
+      guardarError(true)
+      console.log('Llena todos los campos');
+      
+      return
+    }
+
+    guardarError(false)
+
     const editarPlatillo = {
-      nombrePlatillo : nombrePlatilloRef.current.value,
-      precioPlatillo : precioPlatilloRef.current.value,
+      nombrePlatillo : nuevoNombrePlatillo,
+      precioPlatillo : nuevoPrecioPlatillo,
       categoria : categoriaPlatillo
     }
+    // Enviar el request
+    const url = `http://localhost:4000/restaurante/${producto.id}`
+    try {
+      const request = await axios.put(url, editarPlatillo)
+      
+      if(request.status === 200) {
+        Swal.fire(
+          '¡Producto editado!',
+          'Se editó el producto correctamente',
+          'success'
+        )
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Hubo un error de nuestro lado, por favor vuelve a intentarlo.',
+      })
+    }
+
+    // 4 Redireccionamos al usuario
+    guardarCargarProductos(true)
+    history.push('/productos')    
+
   }
 
   const leerValorRadio = e => {
@@ -115,4 +156,4 @@ function EditarProducto({producto}) {
   )
 }
 
-export default EditarProducto
+export default withRouter(EditarProducto)
